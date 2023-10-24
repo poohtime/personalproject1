@@ -55,9 +55,8 @@ const init = async () => {
     cardEl.classList.add("card");
     cardEl.innerHTML = cardBuilder(movie.id, movie.poster_path, movie.title, movie.overview, movie.vote_average);
     cardEl.addEventListener("click", () => {
-      window.location.href = `detail.html?id=${movie.id}`
-
-    })
+      window.location.href = `detail.html?id=${movie.id}`;
+    });
     cardsEl.append(cardEl);
   });
   document.getElementById("search").focus();
