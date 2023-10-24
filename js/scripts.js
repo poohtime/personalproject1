@@ -45,11 +45,14 @@ const search = () => {
   matchedMovies.forEach((movie) => movie.classList.remove("hide"));
 };
 
+
 const init = async () => {
   const movies = await getTopRated();
   if (!movies) return;
   // 카드선택했을때 아이디나오게 하기
   const cardsEl = document.querySelector(".cards");
+  const searchInputEl = document.getElementById('search');
+  
   movies.forEach((movie) => {
     const cardEl = document.createElement("div");
     cardEl.classList.add("card");
@@ -57,8 +60,13 @@ const init = async () => {
     cardEl.addEventListener("click", () => alert(`영화 ID: ${movie.id}`));
     cardsEl.append(cardEl);
   });
-  document.getElementById("search").focus();
+
+  searchInputEl.focus();
+  searchInputEl.addEventListener ('keyup', event => {
+    if(event.key === 'Enter') search();
+  });
   document.querySelector(".search-btn").addEventListener("click", search);
+  
 };
 
 init();
