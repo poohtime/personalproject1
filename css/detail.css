@@ -36,6 +36,18 @@
   margin-bottom: 0.5rem;
 }
 
+.detailOverview{
+  margin-bottom : 2rem;
+}
+.mainbtn{
+  padding : 7px;
+  background-color: beige;
+  font-size : 1rem;
+  border-radius: 5px;
+  border : beige;
+  cursor: pointer;
+}
+
 .card-text {
   margin-top: 0;
 }
