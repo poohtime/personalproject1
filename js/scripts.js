@@ -66,9 +66,7 @@ const init = async() => {
   });
   document.querySelector('.search-btn').addEventListener('click', search);
 }
-const toggle=()=> {
-	element.classList.toggle('test-class');
-}
+
 
 init();
 
@@ -106,10 +104,49 @@ document.getElementById("navbar-fixed").innerHTML = `
   </nav>
   <div class="p-5 text-center bg-light head">
       <h1 class="mb-3">내배캠 최고 평점 영화 콜렉션</h1>
-      <button onclick="openclose()">구독하기</button>
+      <button id="subscribeButton">구독하기</button>
+      <div id="subscriptionForm" style="display: none;">
+        <label for="email">이메일:</label>
+        <input type="email" id="email" required>
+        <button id="confirmSubscription">확인</button>
+        <p id="emailValidationMessage" style="display: none; color: red;">유효하지 않은 이메일 주소입니다.</p>
+    </div>
+
+    <div id="subscriptionSuccess" style="display: none;">
+    <button >구독완료</button>
+    </div>
     </div>
 `;
+const subscribeButton = document.getElementById('subscribeButton');
+const subscriptionForm = document.getElementById('subscriptionForm');
+const emailInput = document.getElementById('email');
+const confirmSubscriptionButton = document.getElementById('confirmSubscription');
+const subscriptionSuccess = document.getElementById('subscriptionSuccess');
+const emailValidationMessage = document.getElementById('emailValidationMessage');
 
+subscribeButton.addEventListener('click', function() {
+    subscribeButton.style.display = 'none';
+    subscriptionForm.style.display = 'block';
+});
+
+confirmSubscriptionButton.addEventListener('click', function() {
+    const enteredEmail = emailInput.value;
+    if (validateEmail(enteredEmail)) {
+        // 여기에서 이메일을 처리하거나 저장할 수 있습니다.
+        // 이 부분을 실제 서버로 전송하는 로직으로 대체해야 할 수 있습니다.
+
+        subscriptionForm.style.display = 'none';
+        subscriptionSuccess.style.display = 'block';
+    } else {
+        emailValidationMessage.style.display = 'block';
+    }
+});
+
+function validateEmail(email) {
+    // 간단한 이메일 유효성 검사를 수행합니다.
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    return emailPattern.test(email);
+}
 document.getElementById("footer-fixed").innerHTML = `
 <footer class="text-center text-lg-start bg-white text-muted">
     <!-- Section: Social media -->
