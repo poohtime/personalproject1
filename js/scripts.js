@@ -54,7 +54,9 @@ const init = async() => {
     const cardEl = document.createElement('div');
     cardEl.classList.add('card');
     cardEl.innerHTML = cardBuilder(movie.id, movie.poster_path, movie.title, movie.overview, movie.vote_average);
-    cardEl.addEventListener('click', () => alert(`영화 ID: ${movie.id}`));
+    cardEl.addEventListener("click", () => {
+      window.location.href = `detail.html?id=${movie.id}`;
+    });
     cardsEl.append(cardEl);
   });
   searchInputEl.focus();
@@ -66,6 +68,7 @@ const init = async() => {
   });
   document.querySelector('.search-btn').addEventListener('click', search);
 }
+
 
 
 init();
