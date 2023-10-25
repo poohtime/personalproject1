@@ -66,7 +66,7 @@ const init = async() => {
   });
   document.querySelector('.search-btn').addEventListener('click', search);
 }
-const toggle() {
+const toggle=()=> {
 	element.classList.toggle('test-class');
 }
 
