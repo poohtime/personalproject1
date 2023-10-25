@@ -21,6 +21,23 @@
 
 .detailcard {
   text-align: center;
+  padding : 50px 300px;
+}
+
+.detailRating {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.detailTitle {
+  font-size : 1.3rem;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.card-text {
+  margin-top: 0;
 }
 
 input[type="text"],
