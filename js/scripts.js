@@ -62,16 +62,6 @@ const init = async () => {
   document.getElementById("search").focus();
   document.querySelector(".search-btn").addEventListener("click", search);
 };
-const urlParams = new URLSearchParams(window.location.search);
-const movieId = urlParams.get("id");
-fetch(`${API_BASE}/movie/${movieId}?api_key=${API_KEY}&language=en-US`)
-  .then((response) => response.json())
-  .then((movie) => {
-    const detailCard = document.querySelector(".detailcard");
-    detailCard.innerHTML = cardBuilder(movie.id, movie.poster_path, movie.title, movie.overview, movie.vote_average);
-  })
-  .catch((error) => {
-    console.error("영화 정보를 가져오지 못했습니다.", error);
-  });
+
 
 init();
