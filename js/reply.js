@@ -4,7 +4,7 @@ btnAddTxt.addEventListener("click", function () {
   const userName = document.getElementById("userName");
   const password = document.getElementById("password");
   const content = document.getElementById("content");
-  const movieId = urlParams.get("id");
+  const movieId = urlParams.get("id");  
 
   if (userName.value == "") {
     alert("작성자를 입력해주세요.");
@@ -35,9 +35,9 @@ btnAddTxt.addEventListener("click", function () {
 // 댓글 그리기
 const replyBuilder = (username, content) => {
   return (
-    "<div>" +
+    "<div class = comment>" +
     '<p class="user-info fs-12 txt-gray">' +
-    username +
+    username + ": " +
     "</p>" +
     "</div>" +
     "<div>" +
