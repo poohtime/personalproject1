@@ -7,16 +7,22 @@
     <title>영화상세페이지</title>
     <link href="css/reset.css" rel="stylesheet" />
     <link href="css/detail.css" rel="stylesheet" />
+    <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+    rel = "stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+    crossorigin="anonymous"
+  />
+  <div id="navbar-fixed"></div>
   </head>
   <body>
-    <div class="head">내배캠 영화</div>
     <div class="detailcard">
-      <img id = "img" src = "">
-      <p id = "rating" class = "detailRating"> </p>
-      <h3 id = "title" class = "detailTitle"> </h3>
-      <h2 id = "overview" class = "detailOverview"> </h2>
-      <button id = "mpbtn" class = "mainbtn">돌아가기</button>
-      
+      <img id = "img" src = "" class = "detailcardimg">
+      <div class="detailcardBox">
+      <h2 id = "title" class = "detailTitle"> </h2>
+      <h5 id = "rating" class = "detailRating"> </h5>
+      <h5 id = "overview" class = "detailOverview"> </h5>
+    </div>
     </div>
     <div class="write-box">
       <div>
@@ -33,6 +39,7 @@
       </div>
       <button id="btnAddTxt" class="postingBtn">글쓰기</button>
     </div>
+    <div id="footer-fixed"></div>
     <script src="js/detail.js"></script>
     <script src="js/reply.js"></script>
   </body>
