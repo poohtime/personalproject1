@@ -30,11 +30,63 @@ btnAddTxt.addEventListener("click", function () {
   }
   draw();
 });
-// 댓글 삭제 기능
 
-// 댓글 그리기
-const replyBuilder = (username, content) => {
-  return (
+const replyEdit = (uuid) => {
+  const movieId = urlParams.get("id");
+  let result = prompt("비밀번호를 입력하세요.", "");
+  let reply = [];
+  let parsed = window.localStorage.getItem(movieId).split("+");
+  for (let i = 0; i < parsed.length; i++) {
+    parsed[i] = JSON.parse(parsed[i]);
+    reply.push(parsed[i]);
+  }
+  for (let i = 0; i < window.localStorage.length; i++) {
+    if (uuid === parsed[i].uuid) {
+      if (result === parsed[i].newPassword) {
+        let editReply = prompt("새로운 리뷰를 등록하세요.", "");
+        parsed[i].newContent = editReply;
+      } else {
+        alert("비밀번호가 다릅니다.");
+      }
+    }
+  }
+};
+
+const replyDel = (uuid) => {
+  const movieId = urlParams.get("id");
+  let result = prompt("비밀번호를 입력하세요.", "");
+  let reply = [];
+  let parsed = window.localStorage.getItem(movieId).split("+");
+  for (let i = 0; i < parsed.length; i++) {
+    parsed[i] = JSON.parse(parsed[i]);
+    reply.push(parsed[i]);
+  }
+  for (let i = 0; i < window.localStorage.length; i++) {
+    if (uuid === parsed[i].uuid) {
+      if (result === parsed[i].newPassword) {
+        //삭제 로직
+        parsed.splice(i, 1);
+        let newLocalStorage = "";
+        if (parsed.length != 0) {
+          for (let j = 0; j < parsed.length; j++) {
+            if (newLocalStorage != 0) {
+              newLocalStorage = newLocalStorage + "+" + parsed[j];
+            } else {
+              newLocalStorage = parsed[j];
+            }
+          }
+        }
+      } else {
+        alert("비밀번호가 다릅니다.");
+      }
+    }
+  }
+};
+
+// 리뷰 그리기
+const replyBuilder = (username, content, uuid) => {
+  const div = document.createElement("div");
+  const newReply =
     "<div>" +
     '<p class="user-info fs-12 txt-gray">' +
     username +
@@ -45,29 +97,34 @@ const replyBuilder = (username, content) => {
     content +
     "</p>" +
     "</div>" +
-    '<div class="reply-list"></div>' +
-    "</div>"
-  );
+    '<button id="EditBtn" class="replyEditBtn">수정</button>' +
+    '<button id="DelBtn" class="replyDelBtn">삭제</button>';
+
+  $(div).append(newReply);
+  const editBtn = div.querySelector(".replyEditBtn");
+  editBtn.addEventListener("click", () => replyEdit(uuid));
+  const delBtn = div.querySelector(".replyDelBtn");
+  delBtn.addEventListener("click", () => replyDel(uuid));
+  console.log(div);
+  return div;
 };
 
 const draw = () => {
-  const replyNo = window.localStorage.length;
   const movieId = urlParams.get("id");
   let reply = [];
-  if (replyNo === 0) return;
+  if (window.localStorage.length === 0) return;
   let parsed = window.localStorage.getItem(movieId).split("+");
   console.log(parsed);
   for (let i = 0; i < parsed.length; i++) {
     parsed[i] = JSON.parse(parsed[i]);
     reply.push(parsed[i]);
   }
-
   console.log(reply);
   const replysEl = document.querySelector(".write-box");
   reply.forEach((reply) => {
     const replyEl = document.createElement("div");
     replyEl.classList.add("reply");
-    replyEl.innerHTML = replyBuilder(reply.newUserName, reply.newContent);
+    replyEl.innerHTML = replyBuilder(reply.newUserName, reply.newContent, reply.uuid);
     replysEl.append(replyEl);
   });
 };
