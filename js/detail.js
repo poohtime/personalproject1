@@ -1,7 +1,7 @@
-//API 
-//API 
+//API
 const API_KEY = '66576c6439a06ef7c8f118ab392d6de9';
 const API_BASE = 'https://api.themoviedb.org/3';
+const YOUTUBE_API_KEY = 'AIzaSyANpT9FPrmsspo6I1ZlzJRqOoq-bjRws4I';
 
 // await쓸때는 async 같이써야함
 const getTopRated = async(page) => {
@@ -14,7 +14,7 @@ const getTopRated = async(page) => {
 }
 
 
-
+//nav-bar
 document.getElementById("navbar-fixed").innerHTML = `
 <nav class="navbar navbar-expand-lg navbar-light bg-white">
     <div class="container-fluid">
@@ -62,6 +62,7 @@ document.getElementById("navbar-fixed").innerHTML = `
     </div>
     </div>
 `;
+//구독하기 버튼 밑 validation
 const subscribeButton = document.getElementById('subscribeButton');
 const subscriptionForm = document.getElementById('subscriptionForm');
 const emailInput = document.getElementById('email');
@@ -77,8 +78,6 @@ subscribeButton.addEventListener('click', function() {
 confirmSubscriptionButton.addEventListener('click', function() {
     const enteredEmail = emailInput.value;
     if (validateEmail(enteredEmail)) {
-        // 여기에서 이메일을 처리하거나 저장할 수 있습니다.
-        // 이 부분을 실제 서버로 전송하는 로직으로 대체해야 할 수 있습니다.
 
         subscriptionForm.style.display = 'none';
         subscriptionSuccess.style.display = 'block';
@@ -88,10 +87,54 @@ confirmSubscriptionButton.addEventListener('click', function() {
 });
 
 function validateEmail(email) {
-    // 간단한 이메일 유효성 검사를 수행합니다.
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     return emailPattern.test(email);
 }
+
+
+const renderTrailer = async (title) => {
+  if (!title) return;
+
+  const res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=${title} trailer&key=${YOUTUBE_API_KEY}`);
+  const youtubeObj = await res.json();
+  const youtubeId = youtubeObj.items[0].id.videoId;
+  const youtubeEmbed = `<iframe id="youtube" width="560" height="315" src="https://www.youtube.com/embed/${youtubeId}" title="${youtubeObj.items[0].snippet.title || title + ' trailer'}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+  const youtubeContainer = document.querySelector('.youtube-container');
+  youtubeContainer.innerHTML = youtubeEmbed;
+  document.querySelector('.trailer-label').after(youtubeContainer);
+}
+
+const getMovieById = async (movieId) => {
+    const response = await fetch(`${API_BASE}/movie/${movieId}?language=en-US&api_key=${API_KEY}`);
+    if (response.ok) {
+        const movie = await response.json();
+        return movie;
+    } else {
+        return alert("오류입니다!");
+    }
+}
+
+const movieDetail = async () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const movieId = urlParams.get("id");
+    const movie = await getMovieById(movieId);
+    if (movie) {
+        document.getElementById("img").src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+        document.getElementById("title").textContent = movie.title;
+        document.getElementById("overview").textContent = movie.overview;
+        document.getElementById("rating").textContent = `평점 : ${movie.vote_average}`;
+        renderTrailer(movie.title);
+    } else {
+        return alert("오류입니다!");
+    }
+}
+const back = document.getElementById("mpbtn");
+back.addEventListener("click", function() {
+    window.location.href = `index.html`;
+});
+movieDetail();
+
+//footer-bar
 document.getElementById("footer-fixed").innerHTML = `
 <footer class="text-center text-lg-start bg-white text-muted">
     <!-- Section: Social media -->
@@ -214,37 +257,3 @@ document.getElementById("footer-fixed").innerHTML = `
     <!-- Copyright -->
 </footer>
 `;
-
-
-const urlParams = new URLSearchParams(window.location.search)
-const movieId = urlParams.get("id");
-
-
-
-const getMovieId = async (movieId) => {
-    const response = await fetch(`${API_BASE}/movie/${movieId}?language=en-US&api_key=${API_KEY}`);
-    if (response.ok) {
-        const movie = await response.json();
-        return movie;
-    } else {
-        return alert("오류입니다!")
-    }
-}
-
-const movieDetail = async () => {
-    const movie = await getMovieId(movieId);
-    if (movie) {
-        document.getElementById("img").src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-        document.getElementById("title").textContent = movie.title
-        document.getElementById("overview").textContent = movie.overview
-        document.getElementById("rating").textContent = `평점 : ${movie.vote_average}`
-    } else {
-        return alert("오류입니다!")
-    }
-}
-const back = document.getElementById("mpbtn")
-back.addEventListener("click", function(){
-    window.location.href = `index.html`
-})
-movieDetail();
-
