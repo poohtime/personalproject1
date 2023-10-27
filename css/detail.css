@@ -21,7 +21,7 @@
 
 .detailcard {
   text-align: center;
-  padding : 50px 300px;
+  padding: 50px 300px;
 }
 
 .detailRating {
@@ -31,20 +31,21 @@
 }
 
 .detailTitle {
-  font-size : 1.3rem;
+  font-size: 1.3rem;
   margin-top: 0;
   margin-bottom: 0.5rem;
 }
 
-.detailOverview{
-  margin-bottom : 2rem;
+.detailOverview {
+  margin-bottom: 2rem;
 }
-.mainbtn{
-  padding : 7px;
+
+.mainbtn {
+  padding: 7px;
   background-color: beige;
-  font-size : 1rem;
+  font-size: 1rem;
   border-radius: 5px;
-  border : beige;
+  border: beige;
   cursor: pointer;
 }
 
@@ -68,22 +69,56 @@ textarea {
   display: inline-block;
 }
 
-.write-box > div {
-  display: flex;
+.write-box>div {
+  display: inline-block;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
   text-align: left;
 }
 
 .write-box {
   border: 1px solid #ddd;
-  padding: 20px 10px;
+  padding: 10px;
   text-align: left;
 }
+
 .write-box label {
   width: 20%;
 }
+
 .write-box textarea {
+  grid-area: auto;
+  width: 1300px;
   height: 100px;
+  border-radius: 10px;
+}
+
+.name {
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+.pw {
+  border-radius: 10px;
+  font-size: 15px;
+
+}
+
+.content {
+  padding-top: 10px;
+}
+
+.writebtn {
+  padding-top: 5px;
+}
+
+.user-input{
+  padding : 10px 20px;
+  clear: both;
+}
+
+.user-info{
+  font-weight: bolder;
+  padding-top: 20px;
+  font-size: 17px;
 }
