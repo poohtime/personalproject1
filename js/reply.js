@@ -40,7 +40,7 @@ const replyEdit = (uuid) => {
     parsed[i] = JSON.parse(parsed[i]);
     reply.push(parsed[i]);
   }
-  for (let i = 0; i < window.localStorage.length + 1; i++) {
+  for (let i = 0; i < reply.length; i++) {
     if (uuid == reply[i].newUUID) {
       if (result == reply[i].newPassword) {
         let editReply = prompt("새로운 리뷰를 등록하세요.", "");
@@ -67,6 +67,7 @@ const replyEdit = (uuid) => {
         alert("비밀번호가 다릅니다.");
       }
     }
+    console.log(i);
   }
   draw();
 };
@@ -80,7 +81,7 @@ const replyDel = (uuid) => {
     parsed[i] = JSON.parse(parsed[i]);
     reply.push(parsed[i]);
   }
-  for (let i = 0; i < window.localStorage.length + 1; i++) {
+  for (let i = 0; i < reply.length; i++) {
     if (uuid == reply[i].newUUID) {
       if (result == reply[i].newPassword) {
         reply.splice(i, 1);
@@ -108,6 +109,7 @@ const replyDel = (uuid) => {
         alert("비밀번호가 다릅니다.");
       }
     }
+    console.log(i);
   }
   draw();
 };
