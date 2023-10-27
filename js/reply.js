@@ -40,10 +40,9 @@ const replyEdit = (uuid) => {
     parsed[i] = JSON.parse(parsed[i]);
     reply.push(parsed[i]);
   }
-  console.log(uuid);
-  for (let i = 0; i < window.localStorage.length; i++) {
-    if (uuid === reply[i].newUUID) {
-      if (result === reply[i].newPassword) {
+  for (let i = 0; i < window.localStorage.length + 1; i++) {
+    if (uuid == reply[i].newUUID) {
+      if (result == reply[i].newPassword) {
         let editReply = prompt("새로운 리뷰를 등록하세요.", "");
         reply[i].newContent = editReply;
         let newLocalStorage = "";
@@ -60,8 +59,8 @@ const replyEdit = (uuid) => {
               newLocalStorage = reply[j];
             }
           }
-          //localstorage 접근
         }
+        //localstorage 접근
         console.log(newLocalStorage);
         window.localStorage.setItem(movieId, newLocalStorage);
       } else {
@@ -81,10 +80,9 @@ const replyDel = (uuid) => {
     parsed[i] = JSON.parse(parsed[i]);
     reply.push(parsed[i]);
   }
-  console.log(uuid);
-  for (let i = 0; i < window.localStorage.length; i++) {
-    if (uuid === reply[i].newUUID) {
-      if (result === reply[i].newPassword) {
+  for (let i = 0; i < window.localStorage.length + 1; i++) {
+    if (uuid == reply[i].newUUID) {
+      if (result == reply[i].newPassword) {
         reply.splice(i, 1);
         let newLocalStorage = "";
         //객체 문자열로 변환
@@ -173,7 +171,7 @@ const draw = () => {
   }
 
   //리뷰 새로 그리기
-  const replysEl = document.querySelector(".write-box");
+  const replysEl = document.querySelector(".user-input");
 
   reply.forEach((reply) => {
     const replyEl = document.createElement("div");
