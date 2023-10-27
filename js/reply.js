@@ -40,16 +40,36 @@ const replyEdit = (uuid) => {
     parsed[i] = JSON.parse(parsed[i]);
     reply.push(parsed[i]);
   }
+  console.log(uuid);
   for (let i = 0; i < window.localStorage.length; i++) {
-    if (uuid === parsed[i].uuid) {
-      if (result === parsed[i].newPassword) {
+    if (uuid === reply[i].newUUID) {
+      if (result === reply[i].newPassword) {
         let editReply = prompt("새로운 리뷰를 등록하세요.", "");
-        parsed[i].newContent = editReply;
+        reply[i].newContent = editReply;
+        let newLocalStorage = "";
+        //객체 문자열로 변환
+        for (let x = 0; x < reply.length; x++) {
+          reply[x] = JSON.stringify(reply[x]);
+        }
+        //문자열 병합
+        if (reply.length != 0) {
+          for (let j = 0; j < reply.length; j++) {
+            if (newLocalStorage != 0) {
+              newLocalStorage = newLocalStorage + "+" + reply[j];
+            } else {
+              newLocalStorage = reply[j];
+            }
+          }
+          //localstorage 접근
+        }
+        console.log(newLocalStorage);
+        window.localStorage.setItem(movieId, newLocalStorage);
       } else {
         alert("비밀번호가 다릅니다.");
       }
     }
   }
+  draw();
 };
 
 const replyDel = (uuid) => {
@@ -61,26 +81,37 @@ const replyDel = (uuid) => {
     parsed[i] = JSON.parse(parsed[i]);
     reply.push(parsed[i]);
   }
+  console.log(uuid);
   for (let i = 0; i < window.localStorage.length; i++) {
-    if (uuid === parsed[i].uuid) {
-      if (result === parsed[i].newPassword) {
-        //삭제 로직
-        parsed.splice(i, 1);
+    if (uuid === reply[i].newUUID) {
+      if (result === reply[i].newPassword) {
+        reply.splice(i, 1);
         let newLocalStorage = "";
-        if (parsed.length != 0) {
-          for (let j = 0; j < parsed.length; j++) {
+        //객체 문자열로 변환
+        for (let x = 0; x < reply.length; x++) {
+          reply[x] = JSON.stringify(reply[x]);
+        }
+        //문자열 병합
+        if (reply.length != 0) {
+          for (let j = 0; j < reply.length; j++) {
             if (newLocalStorage != 0) {
-              newLocalStorage = newLocalStorage + "+" + parsed[j];
+              newLocalStorage = newLocalStorage + "+" + reply[j];
             } else {
-              newLocalStorage = parsed[j];
+              newLocalStorage = reply[j];
             }
           }
+          //localstorage 접근
+        } else {
+          window.localStorage.removeItem(movieId);
         }
+        console.log(newLocalStorage);
+        window.localStorage.setItem(movieId, newLocalStorage);
       } else {
         alert("비밀번호가 다릅니다.");
       }
     }
   }
+  draw();
 };
 
 // 리뷰 그리기
@@ -105,26 +136,45 @@ const replyBuilder = (username, content, uuid) => {
   editBtn.addEventListener("click", () => replyEdit(uuid));
   const delBtn = div.querySelector(".replyDelBtn");
   delBtn.addEventListener("click", () => replyDel(uuid));
-  console.log(div);
   return div;
 };
 
 const draw = () => {
+  //리뷰 불러오기
   const movieId = urlParams.get("id");
   let reply = [];
   if (window.localStorage.length === 0) return;
+
+  //초기 + 포함 시 삭제
+  let newparsed = window.localStorage.getItem(movieId);
+  if (newparsed.charAt(0) === "+") {
+    newparsed = newparsed.substring(1);
+    window.localStorage.setItem(movieId, newparsed);
+  }
+
+  //로컬 스토리지에 저장된 리뷰 파싱
   let parsed = window.localStorage.getItem(movieId).split("+");
-  console.log(parsed);
+  if (parsed[0].length === 0) parsed.splice(0, 1);
   for (let i = 0; i < parsed.length; i++) {
     parsed[i] = JSON.parse(parsed[i]);
     reply.push(parsed[i]);
   }
+
+  console.log(parsed);
   console.log(reply);
+
+  //기존 리뷰 삭제
+  const onlyReply = document.querySelectorAll(".reply");
+  for (let i = 0; i < onlyReply.length; i++) {
+    onlyReply[i].remove();
+  }
+
+  //리뷰 새로 그리기
   const replysEl = document.querySelector(".write-box");
   reply.forEach((reply) => {
     const replyEl = document.createElement("div");
     replyEl.classList.add("reply");
-    replyEl.innerHTML = replyBuilder(reply.newUserName, reply.newContent, reply.uuid);
+    replyEl.append(replyBuilder(reply.newUserName, reply.newContent, reply.newUUID));
     replysEl.append(replyEl);
   });
 };
