@@ -31,7 +31,6 @@ btnAddTxt.addEventListener("click", function () {
   draw();
 });
 
-
 const replyEdit = (uuid) => {
   const movieId = urlParams.get("id");
   let result = prompt("비밀번호를 입력하세요.", "");
@@ -120,10 +119,6 @@ const replyBuilder = (username, content, uuid) => {
   const div = document.createElement("div");
   const newReply =
     "<div>" +
-
-// 댓글 그리기
-const replyBuilder = (username, content) => {
-  return (
     "<div class = comment>" +
     '<p class="user-info fs-12 txt-gray">' +
     username +
@@ -135,12 +130,10 @@ const replyBuilder = (username, content) => {
     "</p>" +
     "</div>" +
     '<div class="reply-list"></div>' +
-    "<div> +
+    "<div>" +
     '<button id="EditBtn" class="replyEditBtn">수정</button>' +
-    '<button id="DelBtn" class="replyDelBtn">삭제</button>';
-    "</div>"
-  );
-
+    '<button id="DelBtn" class="replyDelBtn">삭제</button>' +
+    "</div>";
   $(div).append(newReply);
   const editBtn = div.querySelector(".replyEditBtn");
   editBtn.addEventListener("click", () => replyEdit(uuid));
@@ -189,6 +182,5 @@ const draw = () => {
     replysEl.append(replyEl);
   });
 };
-
 
 draw();
