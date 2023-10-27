@@ -37,7 +37,7 @@ const replyBuilder = (username, content) => {
   return (
     "<div class = comment>" +
     '<p class="user-info fs-12 txt-gray">' +
-    username + ": " +
+    username +
     "</p>" +
     "</div>" +
     "<div>" +
@@ -46,7 +46,9 @@ const replyBuilder = (username, content) => {
     "</p>" +
     "</div>" +
     '<div class="reply-list"></div>' +
+    "<div></div>" +
     "</div>"
+  
   );
 };
 
@@ -63,7 +65,7 @@ const draw = () => {
   }
 
   console.log(reply);
-  const replysEl = document.querySelector(".write-box");
+  const replysEl = document.querySelector(".user-input");
   reply.forEach((reply) => {
     const replyEl = document.createElement("div");
     replyEl.classList.add("reply");
@@ -71,5 +73,6 @@ const draw = () => {
     replysEl.append(replyEl);
   });
 };
+
 
 draw();

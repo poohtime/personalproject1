@@ -106,9 +106,19 @@ textarea {
 
 .content {
   padding-top: 10px;
-  clear : both;
 }
 
 .writebtn {
   padding-top: 5px;
+}
+
+.user-input{
+  padding : 10px 20px;
+  clear: both;
+}
+
+.user-info{
+  font-weight: bolder;
+  padding-top: 20px;
+  font-size: 17px;
 }
