@@ -4,7 +4,7 @@ btnAddTxt.addEventListener("click", function () {
   const userName = document.getElementById("userName");
   const password = document.getElementById("password");
   const content = document.getElementById("content");
-  const movieId = urlParams.get("id");  
+  const movieId = urlParams.get("id");
 
   if (userName.value == "") {
     alert("작성자를 입력해주세요.");
@@ -48,7 +48,7 @@ const replyBuilder = (username, content) => {
     '<div class="reply-list"></div>' +
     "<div></div>" +
     "</div>"
-  
+
   );
 };
 
