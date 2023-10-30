@@ -4,7 +4,7 @@ const API_KEY = "66576c6439a06ef7c8f118ab392d6de9";
 const API_BASE = "https://api.themoviedb.org/3";
 
 const getMovieId = async (movieId) => {
-    const response = await fetch(`${API_BASE}/movie/${movieId}?language=ko-kr&api_key=${API_KEY}`);
+    const response = await fetch(`${API_BASE}/movie/${movieId}?language=en-us&api_key=${API_KEY}`);
     if (response.ok) {
         const movie = await response.json();
         return movie;
