@@ -131,8 +131,8 @@ const replyBuilder = (username, content, uuid) => {
     "</div>" +
     '<div class="reply-list"></div>' +
     "<div>" +
-    '<button id="EditBtn" class="replyEditBtn">수정</button>' +
-    '<button id="DelBtn" class="replyDelBtn">삭제</button>' +
+    '<button id="EditBtn" class="replyEditBtn btn btn-primary me-2">수정</button>' +
+    '<button id="DelBtn" class="replyDelBtn btn btn-danger">삭제</button>' +
     "</div>";
   $(div).append(newReply);
   const editBtn = div.querySelector(".replyEditBtn");
