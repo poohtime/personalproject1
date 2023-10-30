@@ -20,18 +20,28 @@
 }
 
 .detailcard {
-  text-align: center;
-  padding: 50px 300px;
+  display:flex;
+  justify-content: row;
+  text-align: left;
+  padding : 50px 150px;
 }
+.detailcardBox{
+  margin-left: 50px;
+  flex-direction: column;
+}
+.detailcardimg {
+  width : 300px;
+  height : 450px;
 
+}
 .detailRating {
-  font-size: 1.4rem;
+  font-size: 1rem;
   margin-bottom: 0.5rem;
   color: #333;
 }
 
 .detailTitle {
-  font-size: 1.3rem;
+  font-size : 2rem;
   margin-top: 0;
   margin-bottom: 0.5rem;
 }
