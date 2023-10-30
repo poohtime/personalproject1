@@ -98,7 +98,7 @@ const renderTrailer = async (title) => {
   const res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=${title} trailer&key=${YOUTUBE_API_KEY}`);
   const youtubeObj = await res.json();
   const youtubeId = youtubeObj.items[0].id.videoId;
-  const youtubeEmbed = `<iframe id="youtube" width="560" height="315" src="https://www.youtube.com/embed/${youtubeId}" title="${youtubeObj.items[0].snippet.title || title + ' trailer'}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+  const youtubeEmbed = `<iframe id="youtube" width="560" height="315" src="https://www.youtube.com/embed/WCN5JJY_wiA" title="${youtubeObj.items[0].snippet.title || title + ' trailer'}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
   const youtubeContainer = document.querySelector('.youtube-container');
   youtubeContainer.innerHTML = youtubeEmbed;
   document.querySelector('.trailer-label').after(youtubeContainer);
