@@ -150,6 +150,7 @@ const draw = () => {
 
   //초기 + 포함 시 삭제
   let newparsed = window.localStorage.getItem(movieId);
+  if (!newparsed) return;//무비아이디 없을경우
   if (newparsed.charAt(0) === "+") {
     newparsed = newparsed.substring(1);
     window.localStorage.setItem(movieId, newparsed);
