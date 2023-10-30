@@ -1,17 +1,43 @@
-//API 
 const API_KEY = '66576c6439a06ef7c8f118ab392d6de9';
 const API_BASE = 'https://api.themoviedb.org/3';
+let page = 1;
 
-// await쓸때는 async 같이써야함
-const getTopRated = async(page = 1) => {
-  const response = await fetch(`${API_BASE}/movie/top_rated?language=en-US&page=${page}&include_adult=false&api_key=${API_KEY}`);
-  if(response.ok) {
+const selectElement = document.getElementById('select');
+selectElement.addEventListener('change', async () => {
+  const selectedOption = selectElement.value;
+        console.log(selectedOption)
+  const API_URL = `${API_BASE}/movie/${selectedOption}?language=en-US&page=${page}&include_adult=false&api_key=${API_KEY}`;
+
+  const movies = await getMovies(API_URL);
+  renderMovies(movies);
+});
+
+//영화 데이터 가져오기
+const getMovies = async (url) => {
+  let response = await fetch(url);
+  if (response.ok) {
     const json = await response.json();
     return json.results;
   }
-  return false;
-}
-// 카드만들기
+  return [];
+};
+
+//렌더링
+const renderMovies = (movies) => {
+  const cardsEl = document.querySelector('.cards');
+  cardsEl.innerHTML = ''; // Clear previous content
+
+  movies.forEach(movie => {
+    const cardEl = document.createElement('div');
+    cardEl.classList.add('card');
+    cardEl.innerHTML = cardBuilder(movie.id, movie.poster_path, movie.title, movie.overview, movie.vote_average);
+    cardEl.addEventListener("click", () => {
+      window.location.href = `detail.html?id=${movie.id}`;
+    });
+    cardsEl.append(cardEl);
+  });
+};
+    // 카드만들기
 const cardBuilder = (id, poster_src, title, overview, rating) => {
   return `<div id="movie_${id}" class="img-wrapper">
       <img
@@ -45,31 +71,39 @@ const input = document.getElementById("myInput");
 
 
 const init = async() => {
-  const movies = await getTopRated();
-  if(!movies) return;
-// 카드선택했을때 아이디나오게 하기
-  const cardsEl = document.querySelector('.cards');
-  const searchInputEl = document.getElementById('search');
-  movies.forEach(movie => {
-    const cardEl = document.createElement('div');
-    cardEl.classList.add('card');
-    cardEl.innerHTML = cardBuilder(movie.id, movie.poster_path, movie.title, movie.overview, movie.vote_average);
-    cardEl.addEventListener("click", () => {
-      window.location.href = `detail.html?id=${movie.id}`;
+  const selectedOption = selectElement.value; // 현재 선택된 값 가져오기
+  const API_URL = `${API_BASE}/movie/${selectedOption}?language=en-US&page=${page}&include_adult=false&api_key=${API_KEY}`;
+
+  try {
+    const movies = await getMovies(API_URL); // 영화 데이터 가져오기
+    if (!movies) return;
+
+    const cardsEl = document.querySelector('.cards');
+    const searchInputEl = document.getElementById('search');
+
+    cardsEl.innerHTML = ''; // Clear the previous content
+
+    movies.forEach(movie => {
+      const cardEl = document.createElement('div');
+      cardEl.classList.add('card');
+      cardEl.innerHTML = cardBuilder(movie.id, movie.poster_path, movie.title, movie.overview, movie.vote_average);
+      cardEl.addEventListener("click", () => {
+        window.location.href = `detail.html?id=${movie.id}`;
+      });
+      cardsEl.append(cardEl);
     });
-    cardsEl.append(cardEl);
-  });
-  searchInputEl.focus();
-  searchInputEl.addEventListener ('keyup', event => {
-  if(event.key === 'Enter') {
-    console.log('enterpressed');
-    search();
+
+    searchInputEl.focus();
+    searchInputEl.addEventListener('keyup', event => {
+      if (event.key === 'Enter') {
+        search();
+      }
+    });
+    document.querySelector('.search-btn').addEventListener('click', search);
+  } catch (error) {
+    console.error("Error fetching movies:", error);
   }
-  });
-  document.querySelector('.search-btn').addEventListener('click', search);
-}
-
-
+};
 
 init();
 
