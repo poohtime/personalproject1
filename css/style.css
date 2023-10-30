@@ -1,10 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Sunflower:wght@300&display=swap");
-
-
 * {
   font-family: "Gowun Dodum", sans-serif;
 }
-
 .head {
   height: 250px;
   color: black;
@@ -16,58 +13,48 @@
   background-position: center;
   background-size: cover;
 }
-
 .cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   grid-gap: 20px;
   align-items: stretch;
 }
-
 .card {
   border: 1px solid #ccc;
   box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, 0.3);
   padding: 30px;
 }
-
 .card.hide {
   display: none;
 }
-
 .rating {
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
   color: #333;
 }
-
 .card-title {
   margin-top: 0;
   margin-bottom: 0.5rem;
 }
-
 .card-text {
   margin-top: 0;
 }
-
 .img-wrapper {
   text-align: center;
 }
-
 .search-box {
   display: flex;
   justify-content: center;
   margin: 30px;
   align-items: center;
 }
-
 .search-box input {
   height: 30px;
   font-size: 1.5rem;
   padding: 15px;
 }
-
 .search-btn {
-  background-color: #1c8bed;
+  background-color: #1C8BED;
   color: #fff;
   font-size: 1.5rem;
   height: 64px;
@@ -75,12 +62,10 @@
   border: 0;
   cursor: pointer;
 }
-
 .search-btn:hover,
 .search-btn:active {
-  background-color: #1a7cd2;
+  background-color: #1A7CD2;
 }
-
 img {
   margin-top: 15px;
   margin-bottom: 20px;
