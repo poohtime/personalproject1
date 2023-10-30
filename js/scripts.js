@@ -3,7 +3,7 @@ const API_KEY = '66576c6439a06ef7c8f118ab392d6de9';
 const API_BASE = 'https://api.themoviedb.org/3';
 
 // await쓸때는 async 같이써야함
-const getTopRated = async(page) => {
+const getTopRated = async(page = 1) => {
   const response = await fetch(`${API_BASE}/movie/top_rated?language=en-US&page=${page}&include_adult=false&api_key=${API_KEY}`);
   if(response.ok) {
     const json = await response.json();

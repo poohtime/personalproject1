@@ -10,13 +10,21 @@
   </head>
 
   <body>
-    <div class="head">내배캠 영화</div>
     <div class="detailcard">
-      <img id="img" src="" />
-      <p id="rating" class="detailRating"></p>
-      <h3 id="title" class="detailTitle"></h3>
-      <h2 id="overview" class="detailOverview"></h2>
-      <button id="mpbtn" class="mainbtn">돌아가기</button>
+      <img id="img" src="" class="detailcardimg">
+      <div class="detailcardBox">
+        <h3 class="trailer-label">Trailer</h3>
+        <div class="youtube-container mb-3">
+          <iframe id="youtube" class="invisible" width="560" height="315" src="https://www.youtube.com/embed/"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        </div>
+        <h2 id="title" class="detailTitle"> </h2>
+        <h5 id="rating" class="detailRating"> </h5>
+        <h5 id="overview" class="detailOverview"> </h5>
+        <button id="mpbtn" class="mainbtn">돌아가기</button>
+      </div>
     </div>
     <div class="write-box">
       <div class="info">
