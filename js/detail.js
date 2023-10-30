@@ -1,10 +1,11 @@
+//API
 const urlParams = new URLSearchParams(window.location.search)
 const movieId = urlParams.get("id");
 const API_KEY = "66576c6439a06ef7c8f118ab392d6de9";
 const API_BASE = "https://api.themoviedb.org/3";
 const YOUTUBE_API_KEY = 'AIzaSyANpT9FPrmsspo6I1ZlzJRqOoq-bjRws4I';
 
-
+//무비 가져오기
 const getMovieById = async (movieId) => {
     const response = await fetch(`${API_BASE}/movie/${movieId}?language=en-US&api_key=${API_KEY}`);
     if (response.ok) {
@@ -23,7 +24,7 @@ const getTopRated = async(page = 1 ) => {
     return false;
   }
   
-
+//무비 상세보기 카드
   const movieDetail = async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const movieId = urlParams.get("id");
@@ -38,11 +39,14 @@ const getTopRated = async(page = 1 ) => {
         return alert("오류입니다!");
     }
 }
+//되돌아가기
 const back = document.getElementById("mpbtn")
 back.addEventListener("click", function(){
     window.location.href = `index.html`
 })
 movieDetail();
+
+//유투브 예고편
 const renderTrailer = async (title) => {
   if (!title) return;
 
@@ -54,8 +58,7 @@ const renderTrailer = async (title) => {
   youtubeContainer.innerHTML = youtubeEmbed;
   document.querySelector('.trailer-label').after(youtubeContainer);
 }
-
-
+//부스트트랩 네브바
 document.getElementById("navbar-fixed").innerHTML = `
 <nav class="navbar navbar-expand-lg navbar-light bg-white">
     <div class="container-fluid">
@@ -103,6 +106,7 @@ document.getElementById("navbar-fixed").innerHTML = `
     </div>
     </div>
 `;
+//구독하기 버튼
 const subscribeButton = document.getElementById('subscribeButton');
 const subscriptionForm = document.getElementById('subscriptionForm');
 const emailInput = document.getElementById('email');
@@ -118,23 +122,21 @@ subscribeButton.addEventListener('click', function() {
 confirmSubscriptionButton.addEventListener('click', function() {
     const enteredEmail = emailInput.value;
     if (validateEmail(enteredEmail)) {
-        // 여기에서 이메일을 처리하거나 저장할 수 있습니다.
-        // 이 부분을 실제 서버로 전송하는 로직으로 대체해야 할 수 있습니다.
-
         subscriptionForm.style.display = 'none';
         subscriptionSuccess.style.display = 'block';
     } else {
         emailValidationMessage.style.display = 'block';
     }
 });
-
+//이메일 검사
 function validateEmail(email) {
-    // 간단한 이메일 유효성 검사를 수행합니다.
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     return emailPattern.test(email);
 }
+//풋바
 document.getElementById("footer-fixed").innerHTML = `
 <footer class="text-center text-lg-start bg-white text-muted">
+   <footer class="text-center text-lg-start bg-white text-muted">
     <!-- Section: Social media -->
     <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
       <!-- Left -->
@@ -190,43 +192,23 @@ document.getElementById("footer-fixed").innerHTML = `
           <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
             <!-- Links -->
             <h6 class="text-uppercase fw-bold mb-4">
-              Products
+              TEAM MATES
             </h6>
             <p>
-              <a href="#!" class="text-reset">Angular</a>
+              <a href="#!" class="text-reset">이주영</a>
             </p>
             <p>
-              <a href="#!" class="text-reset">React</a>
+              <a href="#!" class="text-reset">허성현</a>
             </p>
             <p>
-              <a href="#!" class="text-reset">Vue</a>
+              <a href="#!" class="text-reset">김용근</a>
             </p>
             <p>
-              <a href="#!" class="text-reset">Laravel</a>
+              <a href="#!" class="text-reset">김다은</a>
             </p>
           </div>
           <!-- Grid column -->
   
-          <!-- Grid column -->
-          <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-            <!-- Links -->
-            <h6 class="text-uppercase fw-bold mb-4">
-              Useful links
-            </h6>
-            <p>
-              <a href="#!" class="text-reset">Pricing</a>
-            </p>
-            <p>
-              <a href="#!" class="text-reset">Settings</a>
-            </p>
-            <p>
-              <a href="#!" class="text-reset">Orders</a>
-            </p>
-            <p>
-              <a href="#!" class="text-reset">Help</a>
-            </p>
-          </div>
-          <!-- Grid column -->
   
           <!-- Grid column -->
           <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
