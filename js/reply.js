@@ -134,6 +134,7 @@ const replyBuilder = (username, content, uuid) => {
     '<button id="EditBtn" class="replyEditBtn">수정</button>' +
     '<button id="DelBtn" class="replyDelBtn">삭제</button>' +
     "</div>";
+  //jQuery for one sentence
   $(div).append(newReply);
   const editBtn = div.querySelector(".replyEditBtn");
   editBtn.addEventListener("click", () => replyEdit(uuid));
