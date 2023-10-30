@@ -2,9 +2,9 @@
 const API_KEY = '66576c6439a06ef7c8f118ab392d6de9';
 const API_BASE = 'https://api.themoviedb.org/3';
 
-// await쓸때는 async 같이써야함
-const getTopRated = async(page) => {
-  const response = await fetch(`${API_BASE}/movie/top_rated?language=en-US&page=${page}&include_adult=false&api_key=${API_KEY}`);
+// await쓸때는 async 같이써야함 원본데이터를 가져와서 작업해야 안꼬임
+const getTopRated = async(page = 1) => {
+  const response = await fetch(`${API_BASE}/movie/top_rated?language=en-US&page=${page}&include_adult=flase&api_key=${API_KEY}`);
   if(response.ok) {
     const json = await response.json();
     return json.results;
@@ -70,7 +70,6 @@ const init = async() => {
 }
 
 
-
 init();
 
 document.getElementById("navbar-fixed").innerHTML = `
@@ -90,7 +89,7 @@ document.getElementById("navbar-fixed").innerHTML = `
       <div class="collapse navbar-collapse" id="navbarExample01">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item active">
-            <a class="nav-link" aria-current="page" href="#">Home</a>
+          <a class="nav-link" href="#">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Features</a>
@@ -131,12 +130,30 @@ subscribeButton.addEventListener('click', function() {
     subscribeButton.style.display = 'none';
     subscriptionForm.style.display = 'block';
 });
+document.getElementById('confirmSubscription').addEventListener('click', function() {
+  const email = document.getElementById('email').value;
+
+  fetch('/subscribe', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email })
+  })
+  .then(response => response.json())
+  .then(data => {
+      alert(data.message);
+  })
+  .catch(error => {
+      console.error('오류:', error);
+      alert('오류가 발생했습니다. 다시 시도해주세요.');
+  });
+});
 
 confirmSubscriptionButton.addEventListener('click', function() {
     const enteredEmail = emailInput.value;
     if (validateEmail(enteredEmail)) {
-        // 여기에서 이메일을 처리하거나 저장할 수 있습니다.
-        // 이 부분을 실제 서버로 전송하는 로직으로 대체해야 할 수 있습니다.
+        console.log("이메일 주소를 서버로 전송합니다: " + enteredEmail);
 
         subscriptionForm.style.display = 'none';
         subscriptionSuccess.style.display = 'block';
@@ -150,6 +167,8 @@ function validateEmail(email) {
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     return emailPattern.test(email);
 }
+
+
 document.getElementById("footer-fixed").innerHTML = `
 <footer class="text-center text-lg-start bg-white text-muted">
     <!-- Section: Social media -->
