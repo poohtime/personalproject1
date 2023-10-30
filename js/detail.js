@@ -5,7 +5,7 @@ const API_BASE = "https://api.themoviedb.org/3";
 const YOUTUBE_API_KEY = 'AIzaSyANpT9FPrmsspo6I1ZlzJRqOoq-bjRws4I';
 
 
-const getMovieId = async (movieId) => {
+const getMovieById = async (movieId) => {
     const response = await fetch(`${API_BASE}/movie/${movieId}?language=en-US&api_key=${API_KEY}`);
     if (response.ok) {
         const movie = await response.json();
@@ -24,15 +24,18 @@ const getTopRated = async(page = 1 ) => {
   }
   
 
-const movieDetail = async () => {
-    const movie = await getMovieId(movieId);
+  const movieDetail = async () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const movieId = urlParams.get("id");
+    const movie = await getMovieById(movieId);
     if (movie) {
-        document.getElementById("img").src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-        document.getElementById("title").textContent = movie.title
-        document.getElementById("overview").textContent = movie.overview
-        document.getElementById("rating").textContent = `평점 : ${movie.vote_average}`
+        document.getElementById("img").src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+        document.getElementById("title").textContent = movie.title;
+        document.getElementById("overview").textContent = movie.overview;
+        document.getElementById("rating").textContent = `평점 : ${movie.vote_average}`;
+        renderTrailer(movie.title);
     } else {
-        return alert("오류입니다!")
+        return alert("오류입니다!");
     }
 }
 const back = document.getElementById("mpbtn")
@@ -40,7 +43,17 @@ back.addEventListener("click", function(){
     window.location.href = `index.html`
 })
 movieDetail();
+const renderTrailer = async (title) => {
+  if (!title) return;
 
+  const res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=${title} trailer&key=${YOUTUBE_API_KEY}`);
+  const youtubeObj = await res.json();
+  const youtubeId = youtubeObj.items[0].id.videoId;
+  const youtubeEmbed = `<iframe id="youtube" width="560" height="315" src="https://www.youtube.com/embed/${youtubeId}" title="${youtubeObj.items[0].snippet.title || title + ' trailer'}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+  const youtubeContainer = document.querySelector('.youtube-container');
+  youtubeContainer.innerHTML = youtubeEmbed;
+  document.querySelector('.trailer-label').after(youtubeContainer);
+}
 
 
 document.getElementById("navbar-fixed").innerHTML = `
@@ -242,26 +255,3 @@ document.getElementById("footer-fixed").innerHTML = `
     <!-- Copyright -->
 </footer>
 `;
-
-const renderTrailer = async (title) => {
-  if (!title) return;
-
-  const res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=${title} trailer&key=${YOUTUBE_API_KEY}`);
-  const youtubeObj = await res.json();
-  const youtubeId = youtubeObj.items[0].id.videoId;
-  const youtubeEmbed = `<iframe id="youtube" width="560" height="315" src="https://www.youtube.com/embed/${youtubeId}" title="${youtubeObj.items[0].snippet.title || title + ' trailer'}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
-  const youtubeContainer = document.querySelector('.youtube-container');
-  youtubeContainer.innerHTML = youtubeEmbed;
-  document.querySelector('.trailer-label').after(youtubeContainer);
-}
-
-const getMovieById = async (movieId) => {
-    const response = await fetch(`${API_BASE}/movie/${movieId}?language=en-US&api_key=${API_KEY}`);
-    if (response.ok) {
-        const movie = await response.json();
-        return movie;
-    } else {
-        return alert("오류입니다!");
-    }
-}
-
